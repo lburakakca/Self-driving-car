@@ -1,0 +1,31 @@
+# macOS system files
+.DS_Store
+
+# Node modules (if used in the future)
+node_modules/
+npm-debug.log
+
+# VS Code settings
+.vscode/
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+
+# Build files (if any)
+build/
+dist/
+
+# Git ignore for local environment
+.env
+
+# Cache files
+.cache/
+
+# Python virtual environment (if used)
+venv/
+__pycache__/
