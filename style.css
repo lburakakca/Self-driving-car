@@ -3,6 +3,10 @@ body{
     background:darkgray;
     overflow:hidden;
     text-align:center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 #myCanvas{
     background:rgb(23, 22, 29);
