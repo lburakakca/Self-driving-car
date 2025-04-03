@@ -35,6 +35,14 @@ class Road {
             Math.min(laneIndex, this.laneCount-1)*laneWidth;
     }
 
+    // New method to get lane index from x-coordinate
+    getLaneIndex(x) {
+        // Calculate the lane index based on x position relative to the left edge and lane width
+        // Ensure the index is within the valid range [0, laneCount - 1]
+        const index = Math.floor((x - this.left) / this.laneWidth);
+        return Math.max(0, Math.min(index, this.laneCount - 1));
+    }
+
     draw(ctx) {
         ctx.lineWidth = 2;
         ctx.strokeStyle = "#FFFFFF";

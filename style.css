@@ -2,12 +2,16 @@ body{
     margin:0;
     background:darkgray;
     overflow:hidden;
-    text-align:center;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     height: 100vh;
+    gap: 20px;
+    padding-top: 20px;
 }
-#myCanvas{
+#carCanvas{
     background:rgb(23, 22, 29);
+}
+#networkCanvas{
+    background:rgb(40, 40, 40);
 }

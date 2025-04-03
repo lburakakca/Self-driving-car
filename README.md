@@ -1,6 +1,52 @@
-# Self-Driving Car Simulation Project
+# Self-Driving Car Simulation (No Libraries)
 
-This project aims to develop an autonomous vehicle simulation from scratch using vanilla JavaScript, HTML, and CSS. The project follows a step-by-step approach, with each phase stored in separate directories.
+This project is a simple 2D simulation of a self-driving car environment, built purely with vanilla JavaScript, HTML, and CSS, without relying on any external game or physics libraries.
+
+## Project Goal
+
+The main goal is to simulate a car that can perceive its environment (road borders and other traffic) using sensors and eventually learn to navigate the road autonomously.
+
+## Current Features
+
+*   **HTML Canvas Rendering:** The simulation is drawn on an HTML canvas.
+*   **Road:** A multi-lane road with borders and dashed lane markings.
+*   **Player Car:**
+    *   Controlled using arrow keys (forward, reverse, left, right).
+    *   Blue color.
+    *   Equipped with sensors that detect road borders and other cars.
+    *   Collision detection: Turns gray when it collides with road borders or traffic.
+*   **Dummy Traffic:**
+    *   Multiple cars moving straight ahead at constant, predefined speeds.
+    *   Red color.
+    *   No sensors or user controls.
+    *   Act as obstacles for the player car.
+*   **Basic Physics:** Simple acceleration, friction, handling, and collision detection.
+
+## File Structure
+
+*   `index.html`: The main HTML file that sets up the canvas and includes the necessary JavaScript files.
+*   `style.css`: Contains basic CSS rules for styling the page and canvas.
+*   `main.js`: The entry point of the simulation. Initializes the canvas, road, player car, and traffic. Contains the main animation loop (`animate`) that updates and draws all elements.
+*   `car.js`: Defines the `Car` class.
+    *   Handles both `PLAYER` and `DUMMY` car types.
+    *   Includes logic for movement (player controls and dummy movement), collision detection (`#assessDamage`), polygon creation (`#createPolygon`), and drawing.
+*   `road.js`: Defines the `Road` class, responsible for calculating road geometry (lanes, borders) and drawing the road.
+*   `sensor.js`: Defines the `Sensor` class used by the player car to detect obstacles via ray casting.
+*   `controls.js`: Defines the `Controls` class that listens for keyboard events to control the player car.
+*   `utils.js`: (Assumed) Contains utility functions like linear interpolation (`lerp`) and polygon intersection (`polysIntersect`).
+
+## How to Run
+
+1.  Clone or download the repository.
+2.  Open the `index.html` file in a web browser that supports HTML5 Canvas and modern JavaScript.
+3.  Use the arrow keys to control the blue car.
+
+## Next Steps (Potential)
+
+*   Implement a neural network for the car's brain.
+*   Train the car to drive autonomously using the sensor data.
+*   Improve traffic behavior (e.g., lane changing, varying speeds).
+*   Enhance visuals and physics.
 
 ## 🚗 Project Structure
 
