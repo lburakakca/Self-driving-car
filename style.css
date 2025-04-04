@@ -3,34 +3,117 @@ body{
     background:darkgray;
     overflow:hidden;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Back to column: Canvases row above, controls below */
     height: 100vh;
+    font-family: Arial, sans-serif; /* Add default font */
 }
 
-#canvasContainer {
+/* Start Screen Styling Removed */
+/* 
+#startScreen { ... }
+#startScreen h1 { ... }
+#difficultySelectorStart { ... }
+#difficultySelectorStart label { ... }
+#difficultySelectorStart select { ... }
+#startButton { ... }
+#startButton:hover { ... }
+*/
+
+/* Container for settings and simulation area */
+#mainContainer {
+    flex-grow: 1; /* Take remaining vertical space if body wasn't 100vh */
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    width: 100%;
-    flex-grow: 1;
-    overflow: hidden;
+    flex-direction: row;
+    width: 100%; 
+    overflow: hidden; /* Prevent inner content from overflowing */
 }
+
+/* Row container for the three canvases */
+#canvasRow {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: row; 
+    justify-content: center; /* Center the canvases horizontally */
+    align-items: stretch; /* Make canvases fill height */
+    width: 100%; 
+    margin: 0 auto; 
+    overflow: hidden; 
+    padding-top: 10px; 
+    padding-bottom: 10px; 
+    gap: 10px; /* Add gap between canvases */
+}
+
+/* Settings Canvas Styling */
+#settingsCanvas {
+    width: 200px; 
+    background: #eee; 
+    border-right: 2px solid #555;
+    height: 100%; 
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+/* Container for the simulation canvases */
+#simulationArea {
+    flex-grow: 1; /* Take remaining horizontal space */
+    display: flex;
+    flex-direction: column; /* Stack car/network canvases vertically */
+    height: 100%;
+}
+
+/* Old container removed */
+/*
+#canvasContainer {
+    ...
+}
+*/
 
 #carCanvas{
     background:rgb(23, 22, 29);
+    width: 600px; /* Set a fixed width for car sim */
+    height: 100%;
+    min-width: 200px; 
+    flex-shrink: 0; /* Prevent shrinking */
 }
 
 #networkCanvas{
     background:rgb(40, 40, 40);
+    width: 300px; 
+    height: 100%;
+    border-left: 2px solid #555;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+/* Container for controls below everything */
+#controlsContainer {
+    width: 100%; /* Take full width */
+    /* position: fixed; - No longer fixed, part of column flow */
+    display: flex;
+    justify-content: space-around; 
+    align-items: center;
+    padding: 10px 0;
+    background: #555;
+    flex-shrink: 0; /* Prevent shrinking */
+    /* z-index: 10; Not needed anymore */
+}
+
+/* Difficulty selector styling (now in game screen) */
+#difficultySelectorGame {
+    color: white;
+    font-size: 16px;
+}
+
+#difficultySelectorGame label {
+    margin-right: 5px;
+}
+
+#difficultySelectorGame select {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 5px;
 }
 
 #buttons{
-    width: 100%;
     text-align: center;
-    padding: 10px 0;
-    background: #555;
-    flex-shrink: 0;
 }
 
 #buttons button {
@@ -49,12 +132,6 @@ body{
 
 #discardButton {
     background-color: #f44336;
-    color: white;
-}
-
-/* Style for the new reset button */
-#resetButton {
-    background-color: #ff9800; /* Orange */
     color: white;
 }
 

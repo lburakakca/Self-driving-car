@@ -206,6 +206,7 @@ class Car{
     }
 
     draw(ctx, drawSensor = true){
+        // Polygon'u (çarpışma alanını) çiz - bu orijinal davranış
         if(this.damaged){
             ctx.fillStyle="gray";
         } else {
@@ -221,6 +222,105 @@ class Car{
             ctx.fill();
         }
 
+        // Araba görünümünü güzelleştir (polygon üzerine ekstralar)
+        if (this.polygon && this.polygon.length === 4) {
+            // Çatı/Cam alanı
+            const p1 = this.polygon[0]; // sol üst
+            const p2 = this.polygon[1]; // sağ üst
+            const p3 = this.polygon[2]; // sağ alt
+            const p4 = this.polygon[3]; // sol alt
+
+            // Çatı noktaları (arabanın %60'ı genişliğinde ve %40'ı yüksekliğinde)
+            const roofPoints = [
+                { // sol üst
+                    x: p1.x + (p4.x - p1.x) * 0.2 + (p2.x - p1.x) * 0.2,
+                    y: p1.y + (p4.y - p1.y) * 0.2 + (p2.y - p1.y) * 0.2
+                },
+                { // sağ üst
+                    x: p2.x + (p3.x - p2.x) * 0.2 + (p1.x - p2.x) * 0.2,
+                    y: p2.y + (p3.y - p2.y) * 0.2 + (p1.y - p2.y) * 0.2
+                },
+                { // sağ alt
+                    x: p3.x + (p2.x - p3.x) * 0.2 + (p4.x - p3.x) * 0.2,
+                    y: p3.y + (p2.y - p3.y) * 0.2 + (p4.y - p3.y) * 0.2
+                },
+                { // sol alt
+                    x: p4.x + (p1.x - p4.x) * 0.2 + (p3.x - p4.x) * 0.2,
+                    y: p4.y + (p1.y - p4.y) * 0.2 + (p3.y - p4.y) * 0.2
+                }
+            ];
+
+            // Çatı/cam çiz
+            ctx.fillStyle = "rgba(0,0,0,0.3)";
+            ctx.beginPath();
+            ctx.moveTo(roofPoints[0].x, roofPoints[0].y);
+            for(let i=1; i<roofPoints.length; i++){
+                ctx.lineTo(roofPoints[i].x, roofPoints[i].y);
+            }
+            ctx.closePath();
+            ctx.fill();
+
+            // Farlar (hasarsız ise)
+            if(!this.damaged) {
+                // Farların konumunu hesapla (ön taraf)
+                const frontMidX = (p1.x + p2.x) / 2;
+                const frontMidY = (p1.y + p2.y) / 2;
+                const headlightSpacing = Math.hypot(p2.x - p1.x, p2.y - p1.y) * 0.3;
+                const headlightSize = Math.hypot(p2.x - p1.x, p2.y - p1.y) * 0.08;
+                
+                // Far noktaları (sol ve sağ)
+                const headlightVectorX = (p2.x - p1.x) / Math.hypot(p2.x - p1.x, p2.y - p1.y);
+                const headlightVectorY = (p2.y - p1.y) / Math.hypot(p2.x - p1.x, p2.y - p1.y);
+                
+                // Farları çiz
+                ctx.fillStyle = this.controlType === "DUMMY" ? "#ffcc00" : "#f1c40f";
+                
+                // Sol far
+                ctx.beginPath();
+                ctx.arc(
+                    frontMidX - headlightVectorX * headlightSpacing,
+                    frontMidY - headlightVectorY * headlightSpacing,
+                    headlightSize, 0, Math.PI * 2
+                );
+                ctx.fill();
+                
+                // Sağ far
+                ctx.beginPath();
+                ctx.arc(
+                    frontMidX + headlightVectorX * headlightSpacing,
+                    frontMidY + headlightVectorY * headlightSpacing,
+                    headlightSize, 0, Math.PI * 2
+                );
+                ctx.fill();
+                
+                // Arka stoplar
+                const backMidX = (p3.x + p4.x) / 2;
+                const backMidY = (p3.y + p4.y) / 2;
+                const taillightSize = headlightSize * 0.8;
+                
+                ctx.fillStyle = "#c0392b"; // Kırmızı arka stop
+                
+                // Sol stop
+                ctx.beginPath();
+                ctx.arc(
+                    backMidX - headlightVectorX * headlightSpacing,
+                    backMidY - headlightVectorY * headlightSpacing,
+                    taillightSize, 0, Math.PI * 2
+                );
+                ctx.fill();
+                
+                // Sağ stop
+                ctx.beginPath();
+                ctx.arc(
+                    backMidX + headlightVectorX * headlightSpacing,
+                    backMidY + headlightVectorY * headlightSpacing,
+                    taillightSize, 0, Math.PI * 2
+                );
+                ctx.fill();
+            }
+        }
+
+        // Sensörleri çiz
         if(this.sensor && drawSensor){
             this.sensor.draw(ctx);
         }
