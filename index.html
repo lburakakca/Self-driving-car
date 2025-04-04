@@ -4,8 +4,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <canvas id="carCanvas"></canvas>
-    <canvas id="networkCanvas"></canvas>
+    <div id="canvasContainer">
+        <canvas id="carCanvas"></canvas>
+        <canvas id="networkCanvas"></canvas>
+    </div>
+    <div id="buttons">
+        <button id="saveButton">💾 Save Best Brain</button>
+        <button id="discardButton">🗑️ Discard Brain</button>
+        <button id="resetButton">🔄 Reset Brain (Start Fresh)</button>
+    </div>
     <script src="utils.js"></script>
     <script src="sensor.js"></script>
     <script src="road.js"></script>

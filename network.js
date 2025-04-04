@@ -92,4 +92,30 @@ class NeuralNetwork {
         // Return the final outputs from the last level
         return outputs;
     }
+
+    // Static method to mutate the network's weights and biases
+    static mutate(network, amount = 1) { // amount: 0=no change, 1=full random change
+        network.levels.forEach(level => {
+            // Mutate biases
+            for (let i = 0; i < level.biases.length; i++) {
+                // Interpolate bias towards a random value (-1 to 1)
+                level.biases[i] = Visualizer.lerp( // Using Visualizer.lerp, assumes it's available globally or passed
+                    level.biases[i],
+                    Math.random() * 2 - 1,
+                    amount
+                );
+            }
+            // Mutate weights
+            for (let i = 0; i < level.weights.length; i++) {
+                for (let j = 0; j < level.weights[i].length; j++) {
+                    // Interpolate weight towards a random value (-1 to 1)
+                    level.weights[i][j] = Visualizer.lerp(
+                        level.weights[i][j],
+                        Math.random() * 2 - 1,
+                        amount
+                    );
+                }
+            }
+        });
+    }
 }

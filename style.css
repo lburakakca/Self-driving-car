@@ -3,15 +3,61 @@ body{
     background:darkgray;
     overflow:hidden;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
     height: 100vh;
-    gap: 20px;
-    padding-top: 20px;
 }
+
+#canvasContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
 #carCanvas{
     background:rgb(23, 22, 29);
 }
+
 #networkCanvas{
     background:rgb(40, 40, 40);
+}
+
+#buttons{
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    background: #555;
+    flex-shrink: 0;
+}
+
+#buttons button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+#saveButton {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#discardButton {
+    background-color: #f44336;
+    color: white;
+}
+
+/* Style for the new reset button */
+#resetButton {
+    background-color: #ff9800; /* Orange */
+    color: white;
+}
+
+#buttons button:hover {
+    opacity: 0.8;
 }

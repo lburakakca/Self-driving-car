@@ -4,49 +4,64 @@ This project is a simple 2D simulation of a self-driving car environment, built 
 
 ## Project Goal
 
-The main goal is to simulate a car that can perceive its environment (road borders and other traffic) using sensors and eventually learn to navigate the road autonomously.
+The main goal is to simulate cars that can perceive their environment and learn to navigate a multi-lane road with traffic using a simple neural network and evolutionary concepts.
 
 ## Current Features
 
-*   **HTML Canvas Rendering:** The simulation is drawn on an HTML canvas.
+*   **HTML Canvas Rendering:** The simulation uses two canvases: one for the car simulation (`carCanvas`) and one for visualizing the neural network (`networkCanvas`).
+*   **Parallel Simulation:** Runs multiple AI cars (`N=100` by default) simultaneously to speed up potential training.
+*   **Best Car Tracking:** Identifies the car that travels the furthest down the road without crashing and focuses the main view and network visualization on it.
 *   **Road:** A multi-lane road with borders and dashed lane markings.
-*   **Player Car:**
-    *   Controlled using arrow keys (forward, reverse, left, right).
+*   **Player/AI Car:**
+    *   Controlled by a simple Neural Network (`AI` type).
+    *   Uses sensors (ray casting) to perceive road borders and traffic.
+    *   Applies basic rules on top of network outputs (avoids driving off edges, brakes for obstacles in the same lane).
     *   Blue color.
-    *   Equipped with sensors that detect road borders and other cars.
-    *   Collision detection: Turns gray when it collides with road borders or traffic.
+    *   Sensors are only visually rendered for the current best car.
 *   **Dummy Traffic:**
-    *   Multiple cars moving straight ahead at constant, predefined speeds.
+    *   Multiple cars moving straight ahead at constant speeds.
+    *   Act as obstacles.
     *   Red color.
-    *   No sensors or user controls.
-    *   Act as obstacles for the player car.
-*   **Basic Physics:** Simple acceleration, friction, handling, and collision detection.
+*   **Neural Network:**
+    *   Simple feedforward network (`network.js`).
+    *   Visualized in real-time on the `networkCanvas` (`visualizer.js`).
+    *   Basic mutation function implemented.
+*   **Saving/Loading/Resetting:**
+    *   The brain (weights and biases) of the best-performing car can be saved to the browser's `localStorage` using the "Save" button.
+    *   Saved brains are automatically loaded and applied (with mutation) to the car population when the simulation restarts.
+    *   The "Discard" and "Reset" buttons clear the saved brain from `localStorage` and reload the page for a fresh start with random brains.
+*   **Controls:**
+    *   Spacebar reloads the simulation (useful for restarting with/without a saved brain).
 
 ## File Structure
 
-*   `index.html`: The main HTML file that sets up the canvas and includes the necessary JavaScript files.
-*   `style.css`: Contains basic CSS rules for styling the page and canvas.
-*   `main.js`: The entry point of the simulation. Initializes the canvas, road, player car, and traffic. Contains the main animation loop (`animate`) that updates and draws all elements.
-*   `car.js`: Defines the `Car` class.
-    *   Handles both `PLAYER` and `DUMMY` car types.
-    *   Includes logic for movement (player controls and dummy movement), collision detection (`#assessDamage`), polygon creation (`#createPolygon`), and drawing.
-*   `road.js`: Defines the `Road` class, responsible for calculating road geometry (lanes, borders) and drawing the road.
-*   `sensor.js`: Defines the `Sensor` class used by the player car to detect obstacles via ray casting.
-*   `controls.js`: Defines the `Controls` class that listens for keyboard events to control the player car.
-*   `utils.js`: (Assumed) Contains utility functions like linear interpolation (`lerp`) and polygon intersection (`polysIntersect`).
+*   `index.html`: Sets up the two canvases, buttons, and includes all JavaScript files.
+*   `style.css`: Styles the page layout, canvases, and buttons.
+*   `main.js`: Initializes the simulation, creates the car population and traffic, handles the main animation loop (updating, finding best car, drawing), manages `localStorage`, and handles button/keyboard events.
+*   `car.js`: Defines the `Car` class (handles `AI` and `DUMMY` types), movement logic, AI rule application, collision detection, and drawing (with conditional sensor display).
+*   `network.js`: Defines the `Level` and `NeuralNetwork` classes, including feedforward and mutation logic.
+*   `visualizer.js`: Contains the `Visualizer` class with static methods to draw the neural network on the `networkCanvas`.
+*   `road.js`: Defines the `Road` class for geometry and drawing.
+*   `sensor.js`: Defines the `Sensor` class for ray casting.
+*   `controls.js`: Defines the `Controls` class (currently primarily used to store AI decisions, keyboard listeners only active if `PLAYER` type were used).
+*   `utils.js`: (Assumed) Contains utility functions like `lerp`, `polysIntersect`.
 
 ## How to Run
 
 1.  Clone or download the repository.
-2.  Open the `index.html` file in a web browser that supports HTML5 Canvas and modern JavaScript.
-3.  Use the arrow keys to control the blue car.
+2.  Open the `index.html` file in a web browser.
+3.  Observe the simulation: The left canvas shows cars, focusing on the best one. The right canvas shows the best car's neural network.
+4.  Use the buttons:
+    *   `Save Best Brain`: Saves the current best car's network to `localStorage`.
+    *   `Discard Brain` / `Reset Brain`: Clears the saved brain and reloads.
+5.  Press `Spacebar` to reload the simulation (will use saved brain if one exists).
 
 ## Next Steps (Potential)
 
-*   Implement a neural network for the car's brain.
-*   Train the car to drive autonomously using the sensor data.
-*   Improve traffic behavior (e.g., lane changing, varying speeds).
-*   Enhance visuals and physics.
+*   Implement a proper genetic algorithm (selection, crossover, mutation) to evolve the brains over generations.
+*   Improve the fitness function (beyond just furthest distance).
+*   Refine the AI rules or replace them with more complex network outputs/structures.
+*   Optimize performance for a larger number of cars or more complex networks.
 
 ## 🚗 Project Structure
 
@@ -126,9 +141,9 @@ The project is organized into the following phases:
 
 - ✅ Car Control: Completed
 - ✅ Basic Sensor System: Completed
-- 🚧 Advanced Collision Detection: In Progress
+- ✅ Advanced Collision Detection: Completed
 - 📝 Traffic Integration: Planned
-- 📝 Neural Network: Planned
+- ✅ Neural Network: Completed
 
 ## 🤝 Contributing
 
