@@ -2,12 +2,17 @@
 
 This project is a simple 2D simulation of a self-driving car environment, built purely with vanilla JavaScript, HTML, and CSS, without relying on any external game or physics libraries.
 
+## 🌐 Live Demo
+
+Try the simulation here: [Self-Driving Car Demo](https://self-driving-car-vert.vercel.app/)
+
 ## 🚀 Project Status (Latest Update)
 
 *   **Layout:** Three-column (Settings | Simulation | Network) centered layout.
 *   **Settings Panel:** Improved UI with sliders for Car Count, Max Speed, Mutation Rate. Settings saved to `localStorage`, require reload (Space/Discard) to apply.
 *   **Cars:** Stylized car shapes with body, roof, headlights, and taillights.
 *   **Traffic:** Fixed, looping traffic patterns based on difficulty.
+*   **AI:** Neural network with visualizer showing real-time decision making.
 *   **Controls:**
     *   Difficulty change reloads the page.
     *   Spacebar reloads the page.
@@ -30,7 +35,7 @@ The main goal is to simulate cars that can perceive their environment and learn 
     *   Controlled by a simple Neural Network.
     *   Use sensors (ray casting) to perceive road borders and traffic.
     *   Apply basic rules (avoid edges, brake for obstacles).
-    *   Blue, stylized car shape with lights.
+    *   Blue, stylized car shape with lights and roof.
     *   Sensors are only visually rendered for the current best car.
 *   **Fixed Traffic:**
     *   Uses predefined, looping patterns based on selected difficulty (1-5).
@@ -58,11 +63,14 @@ The main goal is to simulate cars that can perceive their environment and learn 
 *   `road.js`: Defines the `Road` class for geometry and drawing.
 *   `sensor.js`: Defines the `Sensor` class for ray casting.
 *   `controls.js`: Defines the `Controls` class (primarily stores AI decisions).
-*   `utils.js`: (Assumed) Contains utility functions like `lerp`, `polysIntersect`.
+*   `utils.js`: Contains utility functions like `lerp`, `polysIntersect`.
 
 ## How to Run
 
-1.  Clone or download the repository.
+1.  Clone or download the repository:
+    ```
+    git clone https://github.com/lburakakca/Self-driving-car.git
+    ```
 2.  Open the `index.html` file in a web browser.
 3.  Observe the simulation: Settings on the left, car simulation in the center, network visualization on the right.
 4.  Use the controls:
